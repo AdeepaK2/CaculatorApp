@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Calculator</title>
+    <link rel="stylesheet" type="text/css" href="/css/main.css">
+</head>
+<body>
+    <div class="calculator">
+        <table>
+            <tr>
+                <td colspan="4"><input id="ask-input" type="text" placeholder="Enter" readonly></td>
+            </tr>
+            <tr>
+                <td><button onclick="appendCharacter('1')">1</button></td>
+                <td><button onclick="appendCharacter('2')">2</button></td>
+                <td><button onclick="appendCharacter('3')">3</button></td>
+                <td><button onclick="appendCharacter('+')">+</button></td>
+            </tr>
+            <tr>
+                <td><button onclick="appendCharacter('4')">4</button></td>
+                <td><button onclick="appendCharacter('5')">5</button></td>
+                <td><button onclick="appendCharacter('6')">6</button></td>
+                <td><button onclick="appendCharacter('-')">-</button></td>
+            </tr>
+            <tr>
+                <td><button onclick="appendCharacter('7')">7</button></td>
+                <td><button onclick="appendCharacter('8')">8</button></td>
+                <td><button onclick="appendCharacter('9')">9</button></td>
+                <td><button onclick="appendCharacter('*')">*</button></td>
+            </tr>
+            <tr>
+                <td class="clear" colspan="2"><button onclick="clearInput()">c</button></td>
+                <td><button onclick="appendCharacter('0')">0</button></td>
+                <td><button onclick="appendCharacter('/')">/</button></td>
+            </tr>
+            <tr>
+                <td class="equals" colspan="4"><button onclick="calculate()">=</button></td>
+            </tr>
+        </table>
+        <script>
+            function appendCharacter(character) {
+                var askInput = document.getElementById("ask-input");
+                askInput.value += character;
+            }
+
+            function clearInput() {
+                var askInput = document.getElementById("ask-input");
+                askInput.value = "";
+            }
+
+            function calculate() {
+                var askInput = document.getElementById("ask-input");
+                var result = eval(askInput.value);
+                askInput.value = result;
+            }
+
+
+
+            function handleKeyInput(event) {
+                var key = event.key;
+
+                if (/^[0-9+\-*/\r\n]$/.test(key)) {
+                    if (key === "Enter" || key === "\r\n") {
+                        calculate();
+                    } else if (key === "Escape") {
+                        clearInput();
+                    } else if (key === "Backspace") {
+                        var askInput = document.getElementById("ask-input");
+                        askInput.value = askInput.value.slice(0, -1);
+                    } else {
+                        appendCharacter(key);
+                    }
+                }
+            }
+
+            var askInput = document.getElementById("ask-input");
+            askInput.addEventListener("keydown", handleKeyInput);
+
+        </script>
+    </div>
+</body>
+</html>
